@@ -1,42 +1,17 @@
-/* =====================================================================
-   HOJA DE ESTILOS - Retiro Sustentable
-   ---------------------------------------------------------------------
-   Organización (pensada en CASCADA y ESPECIFICIDAD):
-   1. Fuentes (@font-face)
-   2. Reseteo y modelo de caja (selector universal: especificidad 0,0,0)
-   3. Selectores de TIPO (especificidad 0,0,1): estilos globales
-   4. Selectores de CLASE (especificidad 0,1,0): bloques del layout
-   5. Selectores de CLASE para componentes y combinados
+/* Orden: de lo general a lo particular (tipo arriba, clase abajo)
+   para respetar la cascada y la especificidad. */
 
-   Se ordena de MENOR a MAYOR especificidad: lo general arriba y lo
-   particular abajo. Así las reglas de clase pueden sobrescribir a las
-   de tipo de forma natural, sin pelear con la cascada ni usar !important.
-   Colores tomados del isologotipo: verde oscuro #3f4d48 y salvia #aeb79d.
-   ===================================================================== */
-
-
-/* =====================================================================
-   1. FUENTES
-   ===================================================================== */
-
-/* Tipografía incluida en el propio proyecto (fuentes/Sora-Regular.ttf).
-   Al estar alojada localmente no depende de servicios externos. */
+/* 1. FUENTES */
 @font-face {
     font-family: 'Sora';
     src: url(./fuentes/Sora-Regular.ttf) format('truetype');
-    /* swap: muestra el texto con una fuente de respaldo mientras carga Sora. */
     font-display: swap;
 }
 
 
-/* =====================================================================
-   2. RESETEO BÁSICO Y MODELO DE CAJA
-   ===================================================================== */
+/* 2. RESETEO Y MODELO DE CAJA */
 
-/* Se verificó el modelo de caja: ya estaba el alternativo (border-box).
-   Se agregan ::before y ::after para que también lo usen los pseudoelementos.
-   Con border-box, el padding y el borde quedan DENTRO del ancho declarado,
-   lo que hace los tamaños predecibles. */
+/* Modelo de caja alternativo: padding y borde quedan dentro del ancho. */
 *,
 *::before,
 *::after {
@@ -46,13 +21,9 @@
 }
 
 
-/* =====================================================================
-   3. SELECTORES DE TIPO (estilos globales)
-   ===================================================================== */
+/* 3. SELECTORES DE TIPO */
 
-/* Elemento raíz: la tipografía y el tamaño se definen acá porque todos los
-   elementos los heredan. 16px es el tamaño base; las medidas en rem se
-   calculan a partir de este valor (1rem = 16px). */
+/* Elemento raíz: todos los elementos heredan la tipografía y el tamaño. */
 html {
     font-family: 'Sora', Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -87,7 +58,6 @@ a {
     color: #3f4d48;
 }
 
-/* Imágenes flexibles: nunca más anchas que su contenedor. */
 img {
     display: block;
     max-width: 100%;
@@ -98,23 +68,11 @@ ul {
     list-style: none;
 }
 
-/* Los campos de formulario no heredan la fuente por defecto: se fuerza. */
+/* Los campos de formulario no heredan la fuente por defecto. */
 input,
 textarea,
 button {
     font: inherit;
-}
-
-fieldset {
-    border: 1px solid #aeb79d;
-    border-radius: 6px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-legend {
-    padding: 0 0.5rem;
-    font-weight: bold;
 }
 
 label {
@@ -132,37 +90,27 @@ textarea {
 }
 
 
-/* =====================================================================
-   4. SELECTORES DE CLASE - BLOQUES DEL LAYOUT
-   Una regla por cada bloque: encabezado, contenido principal y pie.
-   ===================================================================== */
+/* 4. SELECTORES DE CLASE - BLOQUES DEL LAYOUT */
 
-/* ENCABEZADO
-   display: flex cambia el comportamiento en dos sentidos:
-   - EXTERNO: el header sigue siendo un bloque respecto de sus hermanos
-     (ocupa todo el ancho y se apila con main y footer).
-   - INTERNO: sus hijos (logo y nav) pasan a ser ítems flexibles y se
-     ubican en fila, uno al lado del otro.
-   El fondo es igual al del pie para dar unidad visual al sitio. */
+/* Flex: por fuera el header sigue siendo un bloque;
+   por dentro, el logo y el menú se ubican en fila. */
 .encabezado {
     display: flex;
-    justify-content: space-between; /* logo a la izquierda, menú a la derecha */
-    align-items: center;            /* centrados verticalmente */
-    flex-wrap: wrap;                /* en pantallas chicas el menú baja */
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem 2rem;
     background-color: #e3e7d6;
 }
 
-/* CONTENIDO PRINCIPAL: ancho máximo para que las líneas no sean
-   demasiado largas y centrado horizontal con margin auto. */
 .contenido-principal {
     max-width: 1100px;
     margin: 0 auto;
     padding: 2rem;
 }
 
-/* PIE: mismo color de fondo que el encabezado (requisito del cliente). */
+/* Mismo color de fondo que el encabezado. */
 .pie {
     padding: 1.5rem 2rem;
     background-color: #e3e7d6;
@@ -171,12 +119,9 @@ textarea {
 }
 
 
-/* =====================================================================
-   5. SELECTORES DE CLASE - COMPONENTES Y COMBINADOS
-   ===================================================================== */
+/* 5. COMPONENTES */
 
-/* --- Menú principal --- */
-/* El <ul> del menú también se vuelve flex para mostrar los enlaces en fila. */
+/* Menú */
 .menu-principal ul {
     display: flex;
     gap: 1.5rem;
@@ -189,15 +134,12 @@ textarea {
     border-bottom: 2px solid transparent;
 }
 
-/* Hover y página actual: subrayado con el color del logo para orientar al usuario. */
 .menu-principal a:hover,
 .menu-principal a[aria-current="page"] {
     border-bottom-color: #3f4d48;
 }
 
-/* --- Catálogo de cabañas --- */
-/* Grid adaptable: entran tantas columnas como quepan (mínimo 240px cada una),
-   sin necesidad de media queries. */
+/* Catálogo: las tarjetas se acomodan solas según el ancho. */
 .catalogo {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -205,7 +147,6 @@ textarea {
     margin-top: 2rem;
 }
 
-/* El título de la sección ocupa toda la fila del grid. */
 .catalogo h2 {
     grid-column: 1 / -1;
     margin-bottom: 0;
@@ -229,8 +170,7 @@ textarea {
     font-size: 1.1rem;
 }
 
-/* margin-top: auto empuja el botón al final de la tarjeta, así todos
-   quedan alineados aunque los textos tengan distinto largo. */
+/* margin-top: auto alinea los botones al final de cada tarjeta. */
 .cabana-boton {
     margin-top: auto;
     padding: 0.6rem 1rem;
@@ -245,7 +185,7 @@ textarea {
     background-color: #2c3633;
 }
 
-/* --- Formulario de reservas --- */
+/* Formulario */
 .formulario-reserva {
     max-width: 600px;
     margin-top: 1.5rem;
