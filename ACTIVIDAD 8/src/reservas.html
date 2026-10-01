@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retiro Sustentable - Reservas</title>
+    <meta name="description" content="Reservá tu cabaña sustentable en San Javier, Traslasierras, Córdoba.">
+    <!-- Misma hoja de estilos que index.html: ambas páginas comparten el layout. -->
+    <link rel="stylesheet" href="./recursos/css/index.css">
+
+    <!--
+    Esta página sigue el enfoque SPA (ver la justificación completa en index.html):
+    es la parte interactiva del sitio (fechas, validación, confirmación), por lo que
+    a futuro JavaScript podría actualizar la página sin recargarla (renderizado
+    del lado del cliente, CSR).
+    -->
+</head>
+<body>
+
+    <!-- Mismo encabezado que index.html para mantener el layout general
+         y que el usuario no se desoriente al cambiar de página. -->
+    <header class="encabezado">
+        <a href="./index.html" class="encabezado-logo">
+            <!-- alt obligatorio: describe la imagen y, al ser enlace, también su destino. -->
+            <img src="./recursos/imagenes/logo-rs.svg" alt="Retiro Sustentable - Ir al inicio" width="180">
+        </a>
+
+        <nav class="menu-principal" aria-label="Menú principal">
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./index.html#cabanas">Cabañas</a></li>
+                <!-- aria-current marca la página actual para lectores de pantalla. -->
+                <li><a href="./reservas.html" aria-current="page">Reservas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="contenido-principal">
+        <h1>Reservas</h1>
+        <!-- El original usaba <h4> después de <h1>: no se deben saltear niveles
+             de títulos, por eso pasa a ser <h2>. -->
+        <h2>Contactanos</h2>
+        <p>Completá el formulario y te responderemos a la brevedad para confirmar la disponibilidad.</p>
+
+        <!-- Atributos del formulario:
+             - action: a dónde se envían los datos (el endpoint del servidor que procesa la reserva).
+             - method="post": los datos viajan en el cuerpo de la petición y no en la URL,
+               lo correcto para datos personales (teléfono, email). -->
+        <form class="formulario-reserva" action="./reservas.html" method="post">
+
+            <!-- <fieldset> agrupa campos relacionados y <legend> es su leyenda:
+                 los lectores de pantalla anuncian la leyenda al entrar al grupo. -->
+            <fieldset>
+                <legend>Datos de contacto</legend>
+
+                <!-- Cada <label> se enlaza a su campo con for="id". Así el lector de
+                     pantalla lee la etiqueta y al hacer clic en ella se enfoca el campo.
+                     El atributo name es el que identifica el dato al enviarlo. -->
+                <div class="campo">
+                    <label for="nombre">Nombre y apellido</label>
+                    <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+                </div>
+
+                <!-- type="tel" muestra el teclado numérico en celulares. -->
+                <div class="campo">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="Ej: 3544 123456" required>
+                </div>
+
+                <!-- type="email" valida automáticamente el formato del correo. -->
+                <div class="campo">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" autocomplete="email" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fechas de estadía</legend>
+
+                <!-- type="date" muestra un calendario nativo y evita errores de formato. -->
+                <div class="campo">
+                    <label for="fecha-desde">Fecha desde</label>
+                    <input type="date" id="fecha-desde" name="fecha_desde" required>
+                </div>
+
+                <div class="campo">
+                    <label for="fecha-hasta">Fecha hasta</label>
+                    <input type="date" id="fecha-hasta" name="fecha_hasta" required>
+                </div>
+            </fieldset>
+
+            <!-- <textarea> para texto largo; el comentario es opcional (sin required). -->
+            <div class="campo">
+                <label for="comentario">Comentario</label>
+                <textarea id="comentario" name="comentario" rows="5" placeholder="Cantidad de personas, cabaña de interés, consultas..."></textarea>
+            </div>
+
+            <!-- <button type="submit"> envía el formulario; el texto describe la acción. -->
+            <button type="submit" class="formulario-boton">Enviar reserva</button>
+        </form>
+    </main>
+
+    <footer class="pie">
+        <p>&copy; 2026 Retiro Sustentable &middot; San Javier, Traslasierras, Córdoba. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

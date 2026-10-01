@@ -1,0 +1,269 @@
+/* =====================================================================
+   HOJA DE ESTILOS - Retiro Sustentable
+   ---------------------------------------------------------------------
+   Organización (pensada en CASCADA y ESPECIFICIDAD):
+   1. Fuentes (@font-face)
+   2. Reseteo y modelo de caja (selector universal: especificidad 0,0,0)
+   3. Selectores de TIPO (especificidad 0,0,1): estilos globales
+   4. Selectores de CLASE (especificidad 0,1,0): bloques del layout
+   5. Selectores de CLASE para componentes y combinados
+
+   Se ordena de MENOR a MAYOR especificidad: lo general arriba y lo
+   particular abajo. Así las reglas de clase pueden sobrescribir a las
+   de tipo de forma natural, sin pelear con la cascada ni usar !important.
+   Colores tomados del isologotipo: verde oscuro #3f4d48 y salvia #aeb79d.
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. FUENTES
+   ===================================================================== */
+
+/* Tipografía incluida en el propio proyecto (fuentes/Sora-Regular.ttf).
+   Al estar alojada localmente no depende de servicios externos. */
+@font-face {
+    font-family: 'Sora';
+    src: url(./fuentes/Sora-Regular.ttf) format('truetype');
+    /* swap: muestra el texto con una fuente de respaldo mientras carga Sora. */
+    font-display: swap;
+}
+
+
+/* =====================================================================
+   2. RESETEO BÁSICO Y MODELO DE CAJA
+   ===================================================================== */
+
+/* Se verificó el modelo de caja: ya estaba el alternativo (border-box).
+   Se agregan ::before y ::after para que también lo usen los pseudoelementos.
+   Con border-box, el padding y el borde quedan DENTRO del ancho declarado,
+   lo que hace los tamaños predecibles. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =====================================================================
+   3. SELECTORES DE TIPO (estilos globales)
+   ===================================================================== */
+
+/* Elemento raíz: la tipografía y el tamaño se definen acá porque todos los
+   elementos los heredan. 16px es el tamaño base; las medidas en rem se
+   calculan a partir de este valor (1rem = 16px). */
+html {
+    font-family: 'Sora', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+body {
+    line-height: 1.6;
+    color: #3f4d48;
+    background-color: #f7f8f3;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #3f4d48;
+}
+
+/* Imágenes flexibles: nunca más anchas que su contenedor. */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Los campos de formulario no heredan la fuente por defecto: se fuerza. */
+input,
+textarea,
+button {
+    font: inherit;
+}
+
+fieldset {
+    border: 1px solid #aeb79d;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+legend {
+    padding: 0 0.5rem;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #aeb79d;
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+
+/* =====================================================================
+   4. SELECTORES DE CLASE - BLOQUES DEL LAYOUT
+   Una regla por cada bloque: encabezado, contenido principal y pie.
+   ===================================================================== */
+
+/* ENCABEZADO
+   display: flex cambia el comportamiento en dos sentidos:
+   - EXTERNO: el header sigue siendo un bloque respecto de sus hermanos
+     (ocupa todo el ancho y se apila con main y footer).
+   - INTERNO: sus hijos (logo y nav) pasan a ser ítems flexibles y se
+     ubican en fila, uno al lado del otro.
+   El fondo es igual al del pie para dar unidad visual al sitio. */
+.encabezado {
+    display: flex;
+    justify-content: space-between; /* logo a la izquierda, menú a la derecha */
+    align-items: center;            /* centrados verticalmente */
+    flex-wrap: wrap;                /* en pantallas chicas el menú baja */
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background-color: #e3e7d6;
+}
+
+/* CONTENIDO PRINCIPAL: ancho máximo para que las líneas no sean
+   demasiado largas y centrado horizontal con margin auto. */
+.contenido-principal {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* PIE: mismo color de fondo que el encabezado (requisito del cliente). */
+.pie {
+    padding: 1.5rem 2rem;
+    background-color: #e3e7d6;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+
+/* =====================================================================
+   5. SELECTORES DE CLASE - COMPONENTES Y COMBINADOS
+   ===================================================================== */
+
+/* --- Menú principal --- */
+/* El <ul> del menú también se vuelve flex para mostrar los enlaces en fila. */
+.menu-principal ul {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.menu-principal a {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+}
+
+/* Hover y página actual: subrayado con el color del logo para orientar al usuario. */
+.menu-principal a:hover,
+.menu-principal a[aria-current="page"] {
+    border-bottom-color: #3f4d48;
+}
+
+/* --- Catálogo de cabañas --- */
+/* Grid adaptable: entran tantas columnas como quepan (mínimo 240px cada una),
+   sin necesidad de media queries. */
+.catalogo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* El título de la sección ocupa toda la fila del grid. */
+.catalogo h2 {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+}
+
+.cabana {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #aeb79d;
+    border-radius: 8px;
+}
+
+.cabana img {
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.cabana-precio {
+    font-size: 1.1rem;
+}
+
+/* margin-top: auto empuja el botón al final de la tarjeta, así todos
+   quedan alineados aunque los textos tengan distinto largo. */
+.cabana-boton {
+    margin-top: auto;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #3f4d48;
+    border-radius: 4px;
+}
+
+.cabana-boton:hover {
+    background-color: #2c3633;
+}
+
+/* --- Formulario de reservas --- */
+.formulario-reserva {
+    max-width: 600px;
+    margin-top: 1.5rem;
+}
+
+.formulario-reserva .campo {
+    margin-bottom: 1rem;
+}
+
+.formulario-boton {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #3f4d48;
+    cursor: pointer;
+}
+
+.formulario-boton:hover {
+    background-color: #2c3633;
+}
