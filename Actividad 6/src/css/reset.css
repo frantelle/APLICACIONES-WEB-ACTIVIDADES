@@ -1,0 +1,67 @@
+/* RESET BÁSICO */
+
+/* 1. Modelo de caja alternativo para todos los elementos */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Quitar márgenes y rellenos por defecto */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 3. Altura completa para html y body */
+html,
+body {
+    height: 100%;
+}
+
+/* 4. Tipografía base legible */
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 5. Medios multimedia como bloques que no desbordan */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 6. Los controles de formulario heredan la tipografía */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* 7. Evitar desbordes de texto largo */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 8. Listas sin viñetas por defecto */
+ul,
+ol {
+    list-style: none;
+}
+
+/* 9. Enlaces sin estilo por defecto */
+a {
+    color: inherit;
+    text-decoration: none;
+}
